@@ -55,7 +55,7 @@ export default function AlertDetails({
         <section>
           <h2 className="text-[16px] font-medium text-[#001742]">URL</h2>
           <div className="space-y-1 mt-1">
-            {alertData["urls"]?.map((alert: string, index: number) => (
+            {alertData?.["urls"]?.map((alert: string, index: number) => (
               <Badge key={index} variant="secondary" className=" bg-[#FBFDFF] border border-[#eaf0fc] p-2 hover:bg-[#FBFDFF] shadow-custom-blue font-medium gap-2 w-full justify-start">
                 {alert}
               </Badge>
@@ -66,7 +66,7 @@ export default function AlertDetails({
         <section>
           <h2 className="text-[16px] font-medium text-[#001742]">Alert targets</h2>
           <div className="space-y-1 mt-1">
-            {alertData["linkedInCustomCategories"]?.map((target: { name: string }, index: number) => (
+            {alertData?.["linkedInCustomCategories"]?.map((target: { name: string }, index: number) => (
               <p key={index} className="text-[#4e5971] text-[14px]">
                 {target.name}
               </p>
@@ -76,7 +76,7 @@ export default function AlertDetails({
 
         <section>
           <h2 className="text-[16px] font-medium text-[#001742]">Alert prompt</h2>
-          <p className="text-[#4e5971] text-[14px]">{alertData.query}</p>
+          <p className="text-[#4e5971] text-[14px]">{alertData?.query}</p>
         </section>
       </div>
     </Card>
