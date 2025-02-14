@@ -4,19 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { getCollectionScheduleFrequency } from "@/utils/utils";
 import Image from "next/image";
 import noDocument from '../../../public/Images/noDocumentSVG.svg';
-
-interface Collection {
-  alerts: any[];
-  collectionDescription: string;
-  collectionName: string;
-  createdAt: string;
-  deletedAt: string | null;
-  email: string;
-  id: string;
-  ownerId: string;
-  schedule: string;
-  updatedAt: string;
-}
+import { Collection } from "@/redux/Collections/types";
 
 interface InfoSectionProps {
   title: string;

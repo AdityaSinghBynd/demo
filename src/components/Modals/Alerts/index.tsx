@@ -100,7 +100,7 @@ export default function CreateAlertModal({ isOpen, onClose, ownerId, collectionI
           linkedInNumberOfPosts: "5",
           linkedInMaxDays: "30",
           linkedInCategories: categories,
-          linkedInCustomCategories: categories.map(category => ({
+          linkedInCustomCategories: categories.map((category: string) => ({
             name: category,
             description: category
           }))

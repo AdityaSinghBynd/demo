@@ -9,6 +9,7 @@ import { AppDispatch, RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { useSession } from "next-auth/react";
 import { useParams } from "next/navigation";
+import { Alert } from '@/redux/Alerts/types';
 
 const initialUpdates: UpdateEntry[] = [
   {

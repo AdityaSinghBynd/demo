@@ -29,6 +29,7 @@ export enum StockMovementCondition {
 
 export interface Alert {
   // Required fields
+  id: string;
   alertCategory: AlertCategoryEnum;
   alertType: AlertTypeEnum;
   query: string;

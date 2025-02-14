@@ -55,7 +55,7 @@ export default function AlertDetails({
         <section>
           <h2 className="text-[16px] font-medium text-[#001742]">URL</h2>
           <div className="space-y-1 mt-1">
-            {alertData?.["urls"]?.map((alert: string, index: number) => (
+            {(alertData?.urls || [])?.map((alert: string, index: number) => (
               <Badge key={index} variant="secondary" className=" bg-[#FBFDFF] border border-[#eaf0fc] p-2 hover:bg-[#FBFDFF] shadow-custom-blue font-medium gap-2 w-full justify-start">
                 {alert}
               </Badge>

@@ -21,7 +21,7 @@ interface ExtendedSession extends Session {
 
 const AUTH_URL = process.env.NEXT_PUBLIC_AUTH_BASE_URL;
 
-export const authOptions: NextAuthOptions = {
+const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -128,6 +128,7 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
 };
 
-// Route handler
 const handler = NextAuth(authOptions);
-export { handler as GET, handler as POST };
+
+// Export the handler functions correctly for App Router
+export { handler as GET, handler as POST }

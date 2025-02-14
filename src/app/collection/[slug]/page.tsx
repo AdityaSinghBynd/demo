@@ -38,7 +38,7 @@ export default function AlertsPage() {
 
   const filteredAlerts = alerts?.filter((alert) => {
     if (selected === "instant") {
-      return alert.alertType === "instantAlerts";
+      return alert.alertType === "InstantAlerts";
     } else {
       return alert.alertType === "RecurringAlerts";
     }
