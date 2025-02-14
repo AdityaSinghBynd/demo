@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Bell, X, Wand2 } from "lucide-react"
+import { Bell, X } from "lucide-react"
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
@@ -10,7 +10,7 @@ import { Label } from "@/components/ui/label"
 import SourceSelector from "./Source"
 import { Textarea } from "@/components/ui/textarea"
 import noPreview from '../../../../public/Images/noPreviewSVG.svg'
-import MagicAiSVGIcon from '../../../../public/Images/MagicAiSVGIcon.svg'
+//import MagicAiSVGIcon from '../../../../public/Images/MagicAiSVGIcon.svg'
 import Image from "next/image"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "@/store/store"
@@ -89,11 +89,28 @@ export default function CreateAlertModal({ isOpen, onClose, ownerId, collectionI
         title: alertHeading,
         alertType: alertType,
         query: alertDescription,
-        alertCategory: sourceData.category,
-        ...sourceData.data
+        alertCategory: sourceData.category
       };
 
-      await dispatch(createAlert({
+      if (sourceData.category === AlertCategoryEnum.LINKEDIN) {
+        const categories = sourceData.data.linkedInCategories || [];
+        const linkedinData = {
+          linkedInUrl: sourceData.data.linkedInUrl,
+          linkedInMaxScrollAttempts: "10",
+          linkedInNumberOfPosts: "5",
+          linkedInMaxDays: "30",
+          linkedInCategories: categories,
+          linkedInCustomCategories: categories.map(category => ({
+            name: category,
+            description: category
+          }))
+        };
+        Object.assign(alertData, linkedinData);
+      } else {
+        Object.assign(alertData, sourceData.data);
+      }
+
+      const response = await dispatch(createAlert({
         values: alertData,
         collectionId
       })).unwrap();
@@ -103,6 +120,7 @@ export default function CreateAlertModal({ isOpen, onClose, ownerId, collectionI
       toast.success("Alert created successfully");
       handleClose();
     } catch (error: any) {
+      console.error('Create Alert Error:', error);
       toast.error(error.message || "Failed to create alert");
     } finally {
       setIsLoading(false);

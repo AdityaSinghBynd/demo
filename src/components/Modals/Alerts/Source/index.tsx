@@ -28,7 +28,7 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ onSourceData }) => {
   const [selectedSource, setSelectedSource] = useState('');
   const [websiteUrls, setWebsiteUrls] = useState<string[]>([]);
   const [websiteUrl, setWebsiteUrl] = useState('');
-  const [linkedinUrl, setLinkedinUrl] = useState('');
+  const [linkedInUrl, setLinkedInUrl] = useState('');
   const [stockSymbol, setStockSymbol] = useState('');
   const [stockDirection, setStockDirection] = useState('');
   const [stockValue, setStockValue] = useState('0');
@@ -38,14 +38,13 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ onSourceData }) => {
   const [linkedinCategories, setLinkedinCategories] = useState<string[]>([]);
   const [currentStockPrice, setCurrentStockPrice] = useState<number | null>(null);
 
-
-  const linkedInOptions = [
-    'Conference updates',
-    'Product launch',
-    'Partnership announced',
-    'Customers announced',
-    'Hires announced'
-  ];
+  const linkedInOptions = {
+    'conferences': 'Conference updates',
+    'products': 'Product launch',
+    'partnerships': 'Partnership announced',
+    'customers': 'Customers announced',
+    'hiring': 'Hires announced'
+  };
 
   const getRealTimePrice = async (symbol: string) => {
     try {
@@ -91,11 +90,11 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ onSourceData }) => {
 
       case AlertCategoryEnum.LINKEDIN:
         sourceData.data = {
-          linkedinUrl: linkedinUrl,
-          linkedinMaxScrollAttempts: "10",
-          linkedinNumberOfPosts: "5",
-          linkedinMaxDays: "30",
-          linkedinCategories: linkedinCategories
+          linkedInUrl: linkedInUrl,
+          linkedInMaxScrollAttempts: "10",
+          linkedInNumberOfPosts: "5",
+          linkedInMaxDays: "30",
+          linkedInCategories: linkedinCategories || []
         };
         break;
 
@@ -111,7 +110,7 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ onSourceData }) => {
     }
 
     onSourceData(sourceData);
-  }, [selectedSource, websiteUrls, linkedinUrl, stockSymbol, stockDirection,
+  }, [selectedSource, websiteUrls, linkedInUrl, stockSymbol, stockDirection,
     stockValue, isPrice, linkedinCategories, currentStockPrice]);
 
   const handleAddWebsite = () => {
@@ -137,11 +136,15 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ onSourceData }) => {
     }
   };
 
-  const handleLinkedInCategoryToggle = (category: string) => {
+  const handleLinkedInCategoryToggle = (displayName: string) => {
+    // Find the category key that matches this display name
+    const categoryKey = Object.entries(linkedInOptions).find(([_, value]) => value === displayName)?.[0];
+    if (!categoryKey) return;
+
     setLinkedinCategories(prev =>
-      prev.includes(category)
-        ? prev.filter(c => c !== category)
-        : [...prev, category]
+      prev.includes(categoryKey)
+        ? prev.filter(c => c !== categoryKey)
+        : [...prev, categoryKey]
     );
   };
 
@@ -289,23 +292,23 @@ const SourceSelector: React.FC<SourceSelectorProps> = ({ onSourceData }) => {
                 type="text"
                 placeholder="Company LinkedIn URL"
                 className="w-full p-2 border-2 border-[#eaf0fc] text-sm rounded"
-                value={linkedinUrl}
-                onChange={(e) => setLinkedinUrl(e.target.value)}
+                value={linkedInUrl}
+                onChange={(e) => setLinkedInUrl(e.target.value)}
               />
             </div>
 
             <div>
               <h2 className="text-sm mb-2">Alert targets</h2>
               <div className="space-y-2">
-                {linkedInOptions.map((option) => (
-                  <label key={option} className="flex items-center space-x-2">
+                {Object.entries(linkedInOptions).map(([key, displayName]) => (
+                  <label key={key} className="flex items-center space-x-2">
                     <input
                       type="checkbox"
-                      checked={linkedinCategories.includes(option)}
-                      onChange={() => handleLinkedInCategoryToggle(option)}
+                      checked={linkedinCategories.includes(key)}
+                      onChange={() => handleLinkedInCategoryToggle(displayName)}
                       className="rounded border-gray-300"
                     />
-                    <span className="text-sm">{option}</span>
+                    <span className="text-sm">{displayName}</span>
                   </label>
                 ))}
               </div>

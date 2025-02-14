@@ -40,9 +40,9 @@ export interface Alert {
   linkedInNumberOfPosts?: string;
   linkedInMaxDays?: string;
   linkedInCategories?: string[];
-  linkedinUrl?: string;
+  linkedInUrl?: string;
   linkedInCustomCategories?: Array<{
-    category: string;
+    name: string;
     description: string;
   }>;
   stockPriceMovementAmount?: number;
@@ -56,13 +56,13 @@ export interface CreateAlert {
   query: string;
   alertCategory: AlertCategoryEnum;
   // LinkedIn specific fields with updated naming
-  linkedinUrl?: string;
-  linkedinMaxScrollAttempts?: string;
-  linkedinNumberOfPosts?: string;
-  linkedinMaxDays?: string;
-  linkedinCategories?: string[];
-  linkedinCustomCategories?: Array<{
-    category: string;
+  linkedInUrl?: string;
+  linkedInMaxScrollAttempts?: string;
+  linkedInNumberOfPosts?: string;
+  linkedInMaxDays?: string;
+  linkedInCategories?: string[];
+  linkedInCustomCategories?: Array<{
+    name: string;
     description: string;
   }>;
 }
